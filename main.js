@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let currentL = settingsJson.currentList
     let currentArr = currentL ? settingsJson.allLists[currentL] : []
 
-    function renderItems() {
+    function renderItems(edit = false) {
         mainContent.innerHTML = ''
         currentArr.forEach((element, index) => {
             const itemDiv = document.createElement("div");

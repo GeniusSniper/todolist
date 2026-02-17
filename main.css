@@ -36,7 +36,7 @@
     display: grid;
     gap: 20px;
     grid-template-rows: repeat(4, 50px);
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
 #mainContent div{
@@ -116,7 +116,17 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: 600px) {
+@media (max-width: 767px) {
+    #navButton{
+        width:50px;
+    }
+    #mainContent {
+        display: grid;
+        gap: 20px;
+        grid-template-rows: repeat(4, 50px);
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
     #createModal {
         padding: 20px;
         min-width: 250px;
