@@ -1,0 +1,38 @@
+#topMenu{
+    display: flex;
+    justify-content: space-between;
+    padding: 1%;
+}
+
+#topMenuRightSide{
+    display: flex;
+    gap: 20px;
+}
+
+.button{
+    padding: 5px;
+    border: 1px solid black;
+    cursor: pointer;
+    border-radius: 25px;
+    align-self: center;
+}
+
+.button:hover{
+    background-color: yellow;
+}
+
+#createItem{
+    display: inline;
+    width: 90px;
+}
+
+#mainContent{
+    display: grid;
+    gap: 20px;
+    grid-template-rows: repeat(4, 50px);
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+}
+
+#mainContent div{
+    text-align: center;
+}
