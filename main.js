@@ -44,9 +44,33 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const modalInput = document.getElementById("modalInput");
     const cancelButton = document.getElementById("cancelButton");
     const saveButton = document.getElementById("saveButton");
-
+    const editSaveButton = document.getElementById("editSaveButton");
+    
+    let editId;
     let currentL = settingsJson.currentList
     let currentArr = currentL ? settingsJson.allLists[currentL] : []
+
+    let holdTimeout;
+    const holdDuration = 1000;
+
+    const onMouseDown = e => {
+        holdTimeout = setTimeout(() => {
+            
+            for(let i = parseInt(e.target.id); i < currentArr.length - 1; i++){
+                currentArr[i] = currentArr[i + 1];
+            }
+            currentArr.pop();
+            
+            localStorage.setItem("settings", JSON.stringify(settingsJson));
+            renderItems();
+        }, holdDuration);
+    };
+
+    const onMouseUpOrLeave = e => {
+        clearTimeout(holdTimeout);
+    };
+
+    document.body.addEventListener("mouseup", onMouseUpOrLeave);
 
     function renderItems(edit = false) {
         mainContent.innerHTML = ''
@@ -67,6 +91,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 localStorage.setItem("settings", JSON.stringify(settingsJson));
             });
 
+            itemDiv.addEventListener("dblclick", e =>{
+                overlay.style.display = "flex";
+                saveButton.style.display = "none";
+                editSaveButton.style.display = "block";
+                modalInput.value = element.text;
+                editId = index;
+                modalInput.focus();
+            })
+
+            itemDiv.addEventListener("mousedown", onMouseDown);
+            itemDiv.addEventListener("mouseup", onMouseUpOrLeave);
+            itemDiv.addEventListener("mouseleave", onMouseUpOrLeave);
+
             mainContent.appendChild(itemDiv);
         });
     }
@@ -74,17 +111,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     createItem.addEventListener('click', e=>{
         overlay.style.display = "flex";
+        editSaveButton.style.display = "none"
+        saveButton.style.display = "block"
         modalInput.focus();
     })
 
     overlay.addEventListener('click', (e) => {
         if (e.target === overlay) {
             overlay.style.display = "none";
+            modalInput.value = "";
         }
     });
 
     cancelButton.addEventListener('click', () => {
         overlay.style.display = "none";
+        modalInput.value = "";
     });
 
     saveButton.addEventListener('click', () => {
@@ -94,6 +135,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 text: newItemText,
                 line: false
             });
+            modalInput.value = '';
+            settingsJson.allLists[currentL] = currentArr;
+            localStorage.setItem("settings", JSON.stringify(settingsJson));
+            renderItems();
+            overlay.style.display = "none";
+        } else {
+            alert("Please enter text for the item");
+            modalInput.focus();
+        }
+    });
+
+    editSaveButton.addEventListener('click', e => {
+        const newItemText = modalInput.value.trim();
+        if (newItemText) {
+            currentArr[editId].text = newItemText;
             modalInput.value = '';
             settingsJson.allLists[currentL] = currentArr;
             localStorage.setItem("settings", JSON.stringify(settingsJson));

@@ -27,16 +27,25 @@
     gap: 20px;
 }
 
+#navButton{
+    background-color: #393E46;
+}
+
+#editItems{
+    background-color: #393E46;
+}
+
 #createItem{
     display: inline;
     width: 114px;
+    background-color: #393E46;
 }
 
 #mainContent{
     display: grid;
     gap: 20px;
-    grid-template-rows: repeat(4, 50px);
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-rows: repeat(auto-fit, minmax(50px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
 #mainContent div{
@@ -111,6 +120,14 @@
     background-color: #38488e;
 }
 
+#editSaveButton {
+    background-color: #1b75a5;
+}
+
+#editSaveButton:hover {
+    background-color: #38488e;
+}
+
 .button:active {
     transform: scale(0.98);
 }
@@ -123,8 +140,10 @@
     #mainContent {
         display: grid;
         gap: 20px;
-        grid-template-rows: repeat(4, 50px);
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        /* grid-template-rows: repeat(auto-fit, minmax(40px, 1fr)); */
+        grid-template-rows: auto;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        /* grid-template-columns: auto; */
     }
 
     #createModal {
