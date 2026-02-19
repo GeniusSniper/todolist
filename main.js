@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const cancelButton = document.getElementById("cancelButton");
     const saveButton = document.getElementById("saveButton");
     const editSaveButton = document.getElementById("editSaveButton");
+    const createModalTitle = document.getElementById("createModalTitle");
     
     let editId;
     let currentL = settingsJson.currentList
@@ -52,6 +53,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     let holdTimeout;
     const holdDuration = 1000;
+    let tapped = false;
 
     const onMouseDown = e => {
         holdTimeout = setTimeout(() => {
@@ -96,6 +98,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 saveButton.style.display = "none";
                 editSaveButton.style.display = "block";
                 modalInput.value = element.text;
+                createModalTitle.textContent = "Edit";
                 editId = index;
                 modalInput.focus();
             })
@@ -104,7 +107,33 @@ document.addEventListener('DOMContentLoaded', (event) => {
             itemDiv.addEventListener("mouseup", onMouseUpOrLeave);
             itemDiv.addEventListener("mouseleave", onMouseUpOrLeave);
 
-            itemDiv.addEventListener("touchstart", onMouseDown);
+            itemDiv.addEventListener("touchstart", e => {
+                if (!tapped) {
+                    tapped = setTimeout(function () {
+                        tapped = null;
+                    }, 400);
+
+                    holdTimeout = setTimeout(() => {
+                        for (let i = parseInt(e.target.id); i < currentArr.length - 1; i++) {
+                            currentArr[i] = currentArr[i + 1];
+                        }
+                        currentArr.pop();
+
+                        localStorage.setItem("settings", JSON.stringify(settingsJson));
+                        renderItems();
+                    }, holdDuration);
+                } else {
+                    clearTimeout(tapped);
+                    tapped = null;
+                    overlay.style.display = "flex";
+                    saveButton.style.display = "none";
+                    editSaveButton.style.display = "block";
+                    modalInput.value = element.text;
+                    createModalTitle.textContent = "Edit";
+                    editId = index;
+                    modalInput.focus();
+                }
+            });
             itemDiv.addEventListener("touchend", onMouseUpOrLeave);
             itemDiv.addEventListener("touchcancel", onMouseUpOrLeave);
 
@@ -114,6 +143,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     renderItems();
 
     createItem.addEventListener('click', e=>{
+        createModalTitle.textContent = "Create New Item";
         overlay.style.display = "flex";
         editSaveButton.style.display = "none"
         saveButton.style.display = "block"
