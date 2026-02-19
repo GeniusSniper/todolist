@@ -104,6 +104,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
             itemDiv.addEventListener("mouseup", onMouseUpOrLeave);
             itemDiv.addEventListener("mouseleave", onMouseUpOrLeave);
 
+            itemDiv.addEventListener("touchstart", onMouseDown);
+            itemDiv.addEventListener("touchend", onMouseUpOrLeave);
+            itemDiv.addEventListener("touchcancel", onMouseUpOrLeave);
+
             mainContent.appendChild(itemDiv);
         });
     }
