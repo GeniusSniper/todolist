@@ -125,6 +125,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     }, holdDuration);
                 } else {
                     clearTimeout(tapped);
+                    clearTimeout(holdTimeout);
                     tapped = null;
                     overlay.style.display = "flex";
                     saveButton.style.display = "none";
@@ -137,6 +138,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
             });
             itemDiv.addEventListener("touchend", onMouseUpOrLeave);
             itemDiv.addEventListener("touchcancel", onMouseUpOrLeave);
+
+            itemDiv.addEventListener("contextmenu", e=> e.preventDefault());
 
             mainContent.appendChild(itemDiv);
         });
