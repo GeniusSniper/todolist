@@ -110,6 +110,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             itemDiv.addEventListener("mouseleave", onMouseUpOrLeave);
 
             itemDiv.addEventListener("touchstart", e => {
+                e.preventDefault();
                 if (!tapped) {
                     if(!click){
                         element.line = !element.line;
