@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let holdTimeout;
     const holdDuration = 1000;
     let tapped = false;
+    let click = false;
 
     const onMouseDown = e => {
         holdTimeout = setTimeout(() => {
@@ -87,6 +88,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             itemDiv.style.justifyContent = "center";
 
             itemDiv.addEventListener("click", () => {
+                click = true;
                 element.line = !element.line;
                 itemDiv.style.textDecoration = element.line ? "line-through" : "none";
                 settingsJson.allLists[currentL] = currentArr;
@@ -109,6 +111,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
             itemDiv.addEventListener("touchstart", e => {
                 if (!tapped) {
+                    if(!click){
+                        element.line = !element.line;
+                        itemDiv.style.textDecoration = element.line ? "line-through" : "none";
+                        settingsJson.allLists[currentL] = currentArr;
+                        localStorage.setItem("settings", JSON.stringify(settingsJson));
+                    }
+                    click = false;
+
                     tapped = setTimeout(function () {
                         tapped = null;
                     }, 400);
@@ -138,7 +148,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             itemDiv.addEventListener("touchend", onMouseUpOrLeave);
             itemDiv.addEventListener("touchcancel", onMouseUpOrLeave);
 
-            itemDiv.addEventListener("contextmenu", e=> e.preventDefault());
+            itemDiv.addEventListener("contextmenu", e => e.preventDefault());
 
             mainContent.appendChild(itemDiv);
         });

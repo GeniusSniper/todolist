@@ -28,14 +28,17 @@
 }
 
 #navButton{
+    text-align: center;
     background-color: #393E46;
 }
 
 #editItems{
+    text-align: center;
     background-color: #393E46;
 }
 
 #createItem{
+    text-align: center;
     display: inline;
     width: 114px;
     background-color: #393E46;
