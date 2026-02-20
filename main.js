@@ -109,6 +109,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
             itemDiv.addEventListener("mouseup", onMouseUpOrLeave);
             itemDiv.addEventListener("mouseleave", onMouseUpOrLeave);
 
+            itemDiv.addEventListener('selectstart', e => e.preventDefault());
+
             itemDiv.addEventListener("touchstart", e => {
                 e.preventDefault();
                 if (!tapped) {
