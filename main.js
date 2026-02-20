@@ -108,7 +108,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             itemDiv.addEventListener("mouseleave", onMouseUpOrLeave);
 
             itemDiv.addEventListener("touchstart", e => {
-                e.preventDefault();
                 if (!tapped) {
                     tapped = setTimeout(function () {
                         tapped = null;
